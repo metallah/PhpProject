@@ -10,6 +10,7 @@ $query= "INSERT INTO `compte` (`login`, `motpasse`, `type`, `EstActif`)VALUES('$
 mysql_query($con, $query);
 
   }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,7 +44,7 @@ mysql_query($con, $query);
 <body class="hold-transition register-page">
 <div class="register-box">
   <div class="register-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <a href="../../index2.html"><b>Admin</b></a>
   </div>
 
   <div class="register-box-body">

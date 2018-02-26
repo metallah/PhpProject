@@ -1,14 +1,13 @@
 <?php
 session_start();
 if(isset($_SESSION['login'])){
-  header("location:profile.php");
+  header("location:login.php");
 }
 if(!empty($_POST)){
     $con =new PDO('mysql:host=localhost;dbname=itprojet','root','');
     $q = $con ->prepare("SELECT count(*) from compte where login =? and motpass=?");
     $q->execute(array($_POST['email'],$_POST['password']));
     $r=$q->fetchColumn();
-
     
     $q = $con ->prepare("SELECT type from compte where login =? and motpass=?");
     $q->execute(array($_POST['email'],$_POST['password']));
@@ -34,6 +33,8 @@ if(!empty($_POST)){
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
+    <link rel="stylesheet" href="C:\wamp64\www\ITProject\fbapp\fb.js">
+    <script type="text/javascript" src="fbapp\fb.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -47,8 +48,9 @@ if(!empty($_POST)){
   <body class="hold-transition login-page">
     <div class="login-box">
       <div class="login-logo">
-        <a href="../../index2.html">
-          <b>Admin</b></a>
+        <a href="index2.html">
+          <b>Admin</b>
+        </a>
       </div>
       <!-- /.login-logo -->
       <div class="login-box-body">
@@ -66,13 +68,13 @@ if(!empty($_POST)){
             <div class="col-xs-8">
               <div class="checkbox icheck">
                 <label>
-                  <input type="checkbox"> Remember Me
+                  <input type="checkbox" name="remember"> Remember Me
                 </label>
               </div>
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
-              <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+              <button type="submit" name="login" class="btn btn-primary btn-block btn-flat">Sign In</button>
               <?php
               if(!empty($_POST)){
                     if($r==1){
@@ -92,7 +94,7 @@ if(!empty($_POST)){
                          elseif($r1==1 && $t=='Joueur'){
                           $_SESSION['Login']=$_POST["email"];
                         echo "<br>Welcome ".$_SESSION['Login'];
-                        header("location:auteur.html");
+                        header("location:auteur.php");
                         }
                     else{
                         echo"<br> user or password is incorrect!";
@@ -107,11 +109,15 @@ if(!empty($_POST)){
 
         <div class="social-auth-links text-center">
           <p>- OR -</p>
-          <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
+          <!-- <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
             <i class="fa fa-facebook"></i> Sign in using Facebook
-          </a>
+          </a> -->
+          <div class="fb-login-button" data-scope="public_profile,email" onlogin="checkLoginState();" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false"
+            data-auto-logout-link="false" data-use-continue-as="false">
+          </div>
+
           <a href="#" class="btn btn-block btn-social btn-google btn-flat">
-            <i class="fa fa-google-plus"></i> Sign in using Google+
+            <i class="fa fa-google-plus"></i> Sign in using Google+ 
           </a>
         </div>
         <!-- /.social-auth-links -->
@@ -126,11 +132,11 @@ if(!empty($_POST)){
     <!-- /.login-box -->
 
     <!-- jQuery 3 -->
-    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.7 -->
-    <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- iCheck -->
-    <script src="../../plugins/iCheck/icheck.min.js"></script>
+    <script src="plugins/iCheck/icheck.min.js"></script>
     <script>
       $(function () {
         $('input').iCheck({

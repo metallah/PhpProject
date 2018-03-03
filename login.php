@@ -33,7 +33,7 @@ if(!empty($_POST)){
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
-    <link rel="stylesheet" href="C:\wamp64\www\ITProject\fbapp\fb.js">
+
     <script type="text/javascript" src="fbapp\fb.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -124,7 +124,7 @@ if(!empty($_POST)){
 
         <a href="#">I forgot my password</a>
         <br>
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <a href="register.php" class="text-center">Register a new membership</a>
 
       </div>
       <!-- /.login-box-body -->

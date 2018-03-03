@@ -1,15 +1,17 @@
 <?php 
 session_start();
-if(!empty($_POST)){
-    $con =new PDO('mysql:host=localhost;dbname=itprojet','root','');
-    
-$name=$_POST['name'];
-$email=$_POST['email'];
-$password=$_POST['password'];
-$query= "INSERT INTO `compte` (`login`, `motpasse`, `type`, `EstActif`)VALUES('$name', '$password')";
-mysql_query($con, $query);
-
+if(isset($_SESSION['submit'])){
+  header("location:register.php");
+}
+if(!empty($_POST['submit'])){
+    $con = mysqli_connect('localhost','root','', 'itprojet');
+      if (isset($_POST['name'])  && isset($_POST['email']) && isset($_POST['password'])) {
+      $q="INSERT INTO `compte` ('login', 'motpass', 'email')values('".$_POST["name"]."', '".$_POST["password"]."', '".$_POST["email"]."') ";
+      $r = mysqli_query($con, $q);
+               if($r) header("location:index2.php");
+                  else $msg = "Registration Failed";
   }
+}
 
 ?>
 <!DOCTYPE html>
@@ -17,7 +19,7 @@ mysql_query($con, $query);
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Registration Page</title>
+  <title>Admin | Registration Page</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -30,7 +32,7 @@ mysql_query($con, $query);
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
-
+<script type="text/javascript" src="fbapp\fb.js"></script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -42,9 +44,10 @@ mysql_query($con, $query);
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition register-page">
+<div class="alert alert-message"><? echo " $msg "; ?></div>
 <div class="register-box">
   <div class="register-logo">
-    <a href="../../index2.html"><b>Admin</b></a>
+    <a href="index2.html"><b>Admin</b></a>
   </div>
 
   <div class="register-box-body">
@@ -52,7 +55,7 @@ mysql_query($con, $query);
 
     <form action="" method="post">
       <div class="form-group has-feedback">
-        <input type="text" name="name" class="form-control" placeholder="Full name">
+        <input type="text" name="name" class="form-control" placeholder="Full name" required>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
@@ -60,11 +63,11 @@ mysql_query($con, $query);
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="Password">
+        <input type="password" name="password" class="form-control" placeholder="Password" >
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" type="Repassword" class="form-control" placeholder="Retype password">
+        <input type="password" name="Repassword" class="form-control" placeholder="Retype password" >
         <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
       </div>
       <div class="row">
@@ -77,7 +80,7 @@ mysql_query($con, $query);
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+          <button type="submit" name="submit"class="btn btn-primary btn-block btn-flat">Register</button>
         </div>
         <!-- /.col -->
       </div>
@@ -85,13 +88,14 @@ mysql_query($con, $query);
 
     <div class="social-auth-links text-center">
       <p>- OR -</p>
-      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using
-        Facebook</a>
+      <div class="fb-login-button" data-scope="public_profile,email" onlogin="checkLoginState();" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false"
+            data-auto-logout-link="false" data-use-continue-as="false">
+          </div>
       <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using
         Google+</a>
     </div>
 
-    <a href="login.html" class="text-center">I already have a membership</a>
+    <a href="login.php" class="text-center">I already have a membership</a>
   </div>
   <!-- /.form-box -->
 </div>
